@@ -277,7 +277,9 @@
 <!--            <class name="org.wso2.am.integration.tests.restapi.admin.throttlingpolicy.AdvancedThrottlingPolicyTestCase"/>-->
 <!--            <class name="org.wso2.am.integration.tests.restapi.admin.EnvironmentTestCase"/>-->
 <!--            <class name="org.wso2.am.integration.tests.restapi.admin.KeyManagersTestCase"/>-->
-            <class name="org.wso2.am.integration.tests.restapi.admin.throttlingpolicy.ThrottlePolicyExportImportTestCase"/>
+<!--            <class name="org.wso2.am.integration.tests.restapi.admin.throttlingpolicy.ThrottlePolicyExportImportTestCase"/>-->
+            <class name="org.wso2.am.integration.tests.restapi.admin.throttlingpolicy.GetThrottlingPoliciesTestCase"/>
+
         </classes>
     </test>
 
