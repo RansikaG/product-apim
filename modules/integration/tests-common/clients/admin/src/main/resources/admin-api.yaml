@@ -4622,8 +4622,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ThrottlePolicyDetails'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     ThrottlePolicyDetails:
       title: Generic Policy
       required:

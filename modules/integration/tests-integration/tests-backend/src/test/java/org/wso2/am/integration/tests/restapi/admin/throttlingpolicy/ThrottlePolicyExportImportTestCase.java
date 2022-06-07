@@ -170,21 +170,18 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
                 requestCountLimit, null);
         SubscriptionThrottlePolicyPermissionDTO permissions = DtoFactory.createSubscriptionThrottlePolicyPermissionDTO(
                 SubscriptionThrottlePolicyPermissionDTO.PermissionTypeEnum.ALLOW, roleList);
-        SubscriptionPolicyDTO = DtoFactory.createSubscriptionThrottlePolicyDTO(subscriptionPolicyName, displayName, description,
-                false, defaultLimit, graphQLMaxComplexity, graphQLMaxDepth, rateLimitCount, rateLimitTimeUnit, customAttributes,
-                stopQuotaOnReach, billingPlan, subscriberCount, permissions);
-
+        SubscriptionPolicyDTO = DtoFactory.createSubscriptionThrottlePolicyDTO(subscriptionPolicyName, displayName,
+                description, false, defaultLimit, graphQLMaxComplexity, graphQLMaxDepth, rateLimitCount,
+                rateLimitTimeUnit, customAttributes, stopQuotaOnReach, billingPlan, subscriberCount, permissions);
         SubscriptionPolicyDTO.setMonetization(monetization);
         //Add the subscription throttling policy
         ApiResponse<SubscriptionThrottlePolicyDTO> addedPolicy = restAPIAdmin.addSubscriptionThrottlingPolicy(
                 SubscriptionPolicyDTO);
-
         //Assert the status code and policy ID
         Assert.assertEquals(addedPolicy.getStatusCode(), HttpStatus.SC_CREATED);
         SubscriptionThrottlePolicyDTO addedPolicyDTO = addedPolicy.getData();
         subscriptionPolicyId = addedPolicyDTO.getPolicyId();
         Assert.assertNotNull(subscriptionPolicyId, "The policy ID cannot be null or empty");
-
         SubscriptionPolicyDTO.setPolicyId(subscriptionPolicyId);
         SubscriptionPolicyDTO.setIsDeployed(false);
         SubscriptionPolicyDTO.setType("SubscriptionThrottlePolicy");
@@ -196,16 +193,12 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
      * Adds a new advanced policy
      */
     public void addAdvancedPolicy() throws Exception {
-
         Long requestCount = 50L;
         List<ConditionalGroupDTO> conditionalGroups = new ArrayList<>();
-
         RequestCountLimitDTO requestCountLimit = DtoFactory.createRequestCountLimitDTO(timeUnit, unitTime,
                 requestCount);
-
         ThrottleLimitDTO defaultLimit = DtoFactory.createThrottleLimitDTO(ThrottleLimitDTO.TypeEnum.REQUESTCOUNTLIMIT,
                 requestCountLimit, null);
-
         AdvancedThrottlingPolicyTestCase advancedThrottlingPolicyTestCase = new AdvancedThrottlingPolicyTestCase(
                 userMode);
         conditionalGroups.add(advancedThrottlingPolicyTestCase.createConditionalGroup(defaultLimit));
@@ -214,13 +207,11 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
         //Add the advanced throttling policy
         ApiResponse<AdvancedThrottlePolicyDTO> addedPolicy = restAPIAdmin.addAdvancedThrottlingPolicy(
                 AdvancedPolicyDTO);
-
         //Assert the status code and policy ID
         Assert.assertEquals(addedPolicy.getStatusCode(), HttpStatus.SC_CREATED);
         AdvancedThrottlePolicyDTO addedPolicyDTO = addedPolicy.getData();
         advancedPolicyId = addedPolicyDTO.getPolicyId();
         Assert.assertNotNull(advancedPolicyId, "The policy ID cannot be null or empty");
-
         AdvancedPolicyDTO.setPolicyId(advancedPolicyId);
         AdvancedPolicyDTO.setIsDeployed(true);
         //Verify the created advanced throttling policy DTO
@@ -231,7 +222,6 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
      * Adds a new application policy
      */
     public void addApplicationPolicy() throws Exception {
-
         Long requestCount = 50L;
         RequestCountLimitDTO requestCountLimit = DtoFactory.createRequestCountLimitDTO(timeUnit, unitTime,
                 requestCount);
@@ -239,17 +229,14 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
                 requestCountLimit, null);
         ApplicationPolicyDTO = DtoFactory.createApplicationThrottlePolicyDTO(applicationPolicyName, displayName,
                 description, false, defaultLimit);
-
         //Add the application throttling policy
         ApiResponse<ApplicationThrottlePolicyDTO> addedPolicy = restAPIAdmin.addApplicationThrottlingPolicy(
                 ApplicationPolicyDTO);
-
         //Assert the status code and policy ID
         Assert.assertEquals(addedPolicy.getStatusCode(), HttpStatus.SC_CREATED);
         ApplicationThrottlePolicyDTO addedPolicyDTO = addedPolicy.getData();
         applicationPolicyId = addedPolicyDTO.getPolicyId();
         Assert.assertNotNull(applicationPolicyId, "The policy ID cannot be null or empty");
-
         ApplicationPolicyDTO.setPolicyId(applicationPolicyId);
         ApplicationPolicyDTO.setIsDeployed(true);
         //Verify the created application throttling policy DTO
@@ -260,7 +247,6 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
      * Adds a new custom policy
      */
     public void addCustomPolicy() {
-
         //Create the custom throttling policy DTO
         String description = "This is a test custom throttle policy";
         String siddhiQuery = "FROM RequestStream\nSELECT userId, ( userId == 'admin@carbon.super' ) AS isEligible, "
@@ -281,7 +267,6 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
             CustomRuleDTO addedPolicyDTO = addedPolicy.getData();
             customPolicyId = addedPolicyDTO.getPolicyId();
             Assert.assertNotNull(customPolicyId, "The policy ID cannot be null or empty");
-
             CustomPolicyDTO.setPolicyId(customPolicyId);
             CustomPolicyDTO.setIsDeployed(true);
             //Verify the created custom throttling policy DTO
@@ -551,7 +536,7 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
     /**
      * Setting Request Headers and executing export throttle policy request
      * @param exportRequest url with query parameters
-     * @return Exported Throttle policy details
+     * @return Exported Throttle policy details response
      * @throws IOException throws if connection issues occurred
      * @throws URISyntaxException throws if URL is malformed
      */
@@ -574,7 +559,6 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
      */
     private File exportArtifact(String username, String password, String policyName, String policyType)
             throws URISyntaxException, IOException {
-
         //construct export Throttle Policy url
         URL exportRequest = new URL(exportUrl + "?name=" + policyName + "&type=" + policyType);
         File TempDir = Files.createTempDir();
@@ -613,7 +597,7 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
             request.setHeader(APIMIntegrationConstants.AUTHORIZATION_HEADER, "Basic " + encodeCredentials(username, password));
             return client.execute(request);
         } catch (URISyntaxException e) {
-            String message="";
+            String message="Invalid URI";
             throw new RuntimeException(message,e);
         }
     }
