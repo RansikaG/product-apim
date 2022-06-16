@@ -124,11 +124,6 @@ public class ThrottlePolicyExportImportTestCase extends APIMIntegrationBaseTest 
     public void setEnvironment() throws Exception {
         super.init(userMode);
         adminApiTestHelper = new AdminApiTestHelper();
-        userManagementClient = new UserManagementClient(keyManagerContext.getContextUrls().getBackEndUrl(),
-                keyManagerContext.getContextTenant().getTenantAdmin().getUserName(),
-                keyManagerContext.getContextTenant().getTenantAdmin().getPassword());
-
-        userManagementClient.addUser(ADMIN1_USERNAME, PASSWORD, new String[] { ADMIN_ROLE }, ADMIN1_USERNAME);
 
         exportUrl = adminURLHttps + APIMIntegrationConstants.REST_API_ADMIN_CONTEXT_FULL_0 + exportRestAPIResource;
         importUrl = adminURLHttps + APIMIntegrationConstants.REST_API_ADMIN_CONTEXT_FULL_0 + importRestAPIResource;

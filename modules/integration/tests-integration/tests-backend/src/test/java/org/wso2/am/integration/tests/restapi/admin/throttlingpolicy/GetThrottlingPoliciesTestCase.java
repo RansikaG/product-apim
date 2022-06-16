@@ -78,10 +78,6 @@ public class GetThrottlingPoliciesTestCase extends APIMIntegrationBaseTest {
     @BeforeClass(alwaysRun = true) public void setEnvironment() throws Exception {
         super.init(userMode);
         adminApiTestHelper = new AdminApiTestHelper();
-        userManagementClient = new UserManagementClient(keyManagerContext.getContextUrls().getBackEndUrl(),
-                keyManagerContext.getContextTenant().getTenantAdmin().getUserName(),
-                keyManagerContext.getContextTenant().getTenantAdmin().getPassword());
-        userManagementClient.addUser(ADMIN1_USERNAME, PASSWORD, new String[] { ADMIN_ROLE }, ADMIN1_USERNAME);
 
         getThrottlePoliciesUrl =
                 adminURLHttps + APIMIntegrationConstants.REST_API_ADMIN_CONTEXT_FULL_0 + getThrottlePoliciesResource;
